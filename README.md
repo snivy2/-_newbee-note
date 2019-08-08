@@ -86,11 +86,11 @@
     this.Arr=res.data;
     liveopen()
   })
-     liveopen(){
-       this.Arr.forEach(item => {
-         this.$set(item,'open',false);
-       })
-    },
+  liveopen(){
+     this.Arr.forEach(item => {
+     this.$set(item,'open',false);
+    })
+   },
   ```
 
 
