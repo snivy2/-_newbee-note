@@ -92,7 +92,11 @@
     })
    },
   ```
-
+- 在v-for中使用Clipboard进行对当前item的复制，
+1. <div :class="'usablecardbody videobox'+ item.videoId">
+2. var clipboard = new Clipboard('.videobox'+val+' .pushflowadd .el-button')  
+3. :data-clipboard-target="'.videobox'+ item.videoId+' .pushflowpwd .el-input__inner'" @click="copyPwd(item.videoId)
+ 主要是要通过固定的标识把当前的元素标记起来，然后用他的api的时候拼接相应的字符串即可
 
 
 
