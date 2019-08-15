@@ -98,6 +98,8 @@
 3. :data-clipboard-target="'.videobox'+ item.videoId+' .pushflowpwd .el-input__inner'" @click="copyPwd(item.videoId)
  主要是要通过固定的标识把当前的元素标记起来，然后用他的api的时候拼接相应的字符串即可
 
+- 在vue中生成二维码时，可以使用专属vue的使用vue-qriously生成二维码，更加快捷方便，来替代qrcord
+具体使用见https://www.jianshu.com/p/01edb4c06823
 
 
 
