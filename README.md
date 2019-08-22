@@ -101,5 +101,7 @@
 - 在vue中生成二维码时，可以使用专属vue的使用vue-qriously生成二维码，更加快捷方便，来替代qrcord
 具体使用见https://www.jianshu.com/p/01edb4c06823
 
+- egg解密加密aes,用https://www.npmjs.com/package/aes-ecb 三行代码搞定
+
 
 
