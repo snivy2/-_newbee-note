@@ -103,5 +103,27 @@
 
 - egg解密加密aes,用https://www.npmjs.com/package/aes-ecb 三行代码搞定
 
+- 使用vue的history模式时   会出现打包到后台时  页面刷新404的问题，解决方法是在egg里面配置一个中间件
+
+  ```javascript
+
+// app/middleware/history_fallback.js
+module.exports = () => {
+  return async function historyFallback(ctx, next) {
+    await next();
+    if (ctx.status === 404 && !ctx.body) {
+      if (ctx.acceptJSON) {
+        ctx.body = { error: 'Not Found' };
+      } else {
+        ctx.render('index')
+      }
+    }
+  };
+};
+ // config/config.default.js
+module.exports = {
+  middleware: [ 'historyFallback' ],
+};
+  ```
 
 
