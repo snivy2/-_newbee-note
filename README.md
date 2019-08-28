@@ -125,5 +125,13 @@ module.exports = {
   middleware: [ 'historyFallback' ],
 };
   ```
-
-
+- 在打包vue时因为js文件太大，把第三方资源都采用外部引入的方式，但是在抽离elementui时，最后报错了，然后改了行代码，玄学般的生效了
+    ```javascript
+  externals:{
+    'vue':'Vue',
+    'vue-router':'VueRouter',
+    'vuex':'Vuex',
+    'axios':'axios',
+    'element-ui':'ELEMENT'
+  },
+  ```
