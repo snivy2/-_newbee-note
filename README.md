@@ -102,6 +102,7 @@
 具体使用见https://www.jianshu.com/p/01edb4c06823
 
 - egg解密加密aes,用https://www.npmjs.com/package/aes-ecb 三行代码搞定
+- 字符串的trim方法，可以去掉 字符串里 一些乱码，比较实用，trim()方法实际上trim掉了字符串两端Unicode编码小于等于32（\u0020）的所有字符。所以一些空格，退格都可以删掉
 
 - 使用vue的history模式时   会出现打包到后台时  页面刷新404的问题，解决方法是在egg里面配置一个中间件
 
