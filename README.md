@@ -109,97 +109,51 @@ ps:element-ui关于图标的坑还是蛮多的,自己就遇到过这么多次,�
 
 - 第一次在业务中使用递归
 第一次在业务中使用递归就一下子用了三个，hhh，主要是根据 后台返回的数据,来先渲染成一个递归的下拉选择框,然后在编辑时,由于list中的数据,只包含最子级的id,又需要递归出他的父级id从而才可以正确显示在下拉中
-部分原始数据(id已经换掉):
-    ```javascript
-[
-  {
-    "children": [],
-    "list": [
-      {
-        "key": 10000,
-        "name": "最高管理员",
-        "description": "平台的最高管理员帐号，拥有所有权限并可配置系统",
-        "target": 1,
-        "group": 10000,
-        "rank": 100
-      },
-      {
-        "key": 10001,
-        "name": "管理员",
-        "description": "平台的普通管理员帐号，拥有所有权限，但不能配置系统",
-        "target": 1,
-        "group": 10000,
-        "rank": 200
-      }
-    ],
-    "id": 10000,
-    "name": "平台管理员",
-    "parentId": 0,
-    "target": 1,
-    "rank": 0
-  },
-  {
-    "children": [
-      {
-        "children": [],
-        "list": [
-          {
-            "key": 11003,
-            "name": "查看已入住企业信息",
-            "description": "查看已入住企业的相关数据",
-            "target": 1,
-            "group": 10003,
-            "rank": 500
-          },
-          {
-            "key": 11004,
-            "name": "企业续费及停用",
-            "description": "管理企业续费和企业退出",
-            "target": 1,
-            "group": 10003,
-            "rank": 600
-          },
-          {
-            "key": 11006,
-            "name": "数据导出",
-            "description": "导出一份企业数据，进行另外留档",
-            "target": 1,
-            "group": 10003,
-            "rank": 800
-          }
-        ],
-        "id": 10003,
-        "name": "已入住企业管理",
-        "parentId": 10002,
-        "target": 1,
-        "rank": 100
-      }
-    ],
-    "list": [
-      {
-        "key": 20001,
-        "name": "入住管理",
-        "description": "管理系统的新企业入住，分发线上入住链接或录入线下资料",
-        "target": 1,
-        "group": 10002,
-        "rank": 300
-      },
-      {
-        "key": 11002,
-        "name": "临时用户管理",
-        "description": "管理系统中已注册但无入住企业信息的帐号",
-        "target": 1,
-        "group": 10002,
-        "rank": 400
-      }
-    ],
-    "id": 10002,
-    "name": "平台入住用户管理",
-    "parentId": 0,
-    "target": 1,
-    "rank": 100
-  }
-]
-  ```
 
+  ```javascript
+    // 递归处理权限下拉数据结构
+    getAuthorityOption(list) {
+      list.forEach(items => {
+        items["key"] = items.id;
+        items.children.forEach(item => {
+          items.list.push(item);
+        });
+        if (items.children.length > 0) {
+          this.getAuthorityOption(items.children);
+        }
+      });
+    }
+    
+       //递归查找权限父级
+      function buildParentList(arr) {
+        arr.forEach(g => {
+          if (g.group != undefined) {
+            let pid = g["group"];
+            let oid = g["key"];
+            if (pid != oid) {
+              parentList[oid] = pid;
+            }
+          } else if (g.parentId != undefined && g.parentId != 0) {
+            let pid = g["parentId"];
+            let oid = g["key"];
+            if (pid != oid) {
+              parentList[oid] = pid;
+            }
+          }
+          if (g.list != undefined) buildParentList(g["list"]);
+        });
+      }
+      let that = this
+      //递归插入父级到权限数组里
+      function findParent(idx) {
+        if (parentList[idx] != undefined) {
+          let pid = parentList[idx];
+          that.temp.authority.unshift(pid)
+          findParent(pid);
+        }
+      }
+      let parentList = {};
+      buildParentList(this.authorityOptions);
+      findParent(row.authority); 
+  ```
 
