@@ -157,3 +157,4 @@ ps:element-ui关于图标的坑还是蛮多的,自己就遇到过这么多次,�
       findParent(row.authority); 
   ```
 
+- 在局域网测试时遇到的host与cookies相关的问题。后端采用了cookie的域校验，所以域名不能才能默认的localhost的问题。解决方法是先在本地host文件，配置相关的子父域名的host，再修改vueconfig里面的配置项，“disablehostcheck:true”忽略host校验就可以了。注意，这里之前的cookie存不上的原因其实不是没存上，而是在当前的域名里存的其他域名cookie并不会在浏览器里的相关地方看到。之后直接输入配的域名就可以访问了
