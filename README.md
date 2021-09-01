@@ -172,6 +172,16 @@ ps:element-ui关于图标的坑还是蛮多的,自己就遇到过这么多次,�
 - element ui 日期选择器 只让选择固定天数，在使用选择器的时候，遇到只让选择跨度为x天的需求，通过使用掘金大佬的代码后发现 他是x天内的都可以选，稍微改造了一下，完成如下：
 他自带的return return出去是不让选的部分，所以这地方逻辑要好好思考
 
+- element ui tree组件 搜索框清空时关闭所有折叠，看了源码以及参考网上的大神之后：
+    ```javascript
+      if (!value) {
+        //全部折叠
+        this.$refs.tree2.store._getAllNodes().map((n) => (n.expanded = false));//获取所有节点
+        this.$refs.tree2.root.childNodes.forEach((ele) => {//发现没法收缩根节点后 看了源码 新增了这一行
+          ele.expanded = false;
+        });
+      }
+```
 
 - 组里的人遇到一个比较难的业务层面的代码实现，看了下确实坑很多，帮他搞定了 记录一下：
 业务：elementui 可展开表格下嵌套一个element可多选表格，要求可以展开收起后能记录住选择的哪些
